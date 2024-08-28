@@ -1,0 +1,191 @@
+/* Styling for the Dropzone Area */
+.dropzone {
+    flex: 1;
+    padding: 16px;
+    min-height: 500px;
+    border: 2px dashed #ccc;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Grid and Grid Cells */
+.grid {
+    display: grid;
+    /* gap: 5px; */
+    /* margin-bottom: 10px; */
+}
+
+.grid-cell-wrapper {
+    position: relative;
+}
+
+.grid-cell {
+    min-height: 100px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-collapse: collapse;
+    background-color: #f7f7f7;
+    text-align: center;
+    position: relative;
+}
+
+/* Highlight when dragging over a grid cell */
+.grid-cell.is-over {
+    border-color: #aaa;
+    background-color: #e0e0e0;
+}
+
+/* Controls inside each grid cell */
+.grid-cell-icons {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.icon-delete {
+    cursor: pointer;
+    color: red;
+    font-size: 20px;
+}
+
+.icon-move {
+    cursor: move;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Controls for each grid row */
+.grid-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f9f9f9;
+    padding: 2px;
+    /* border: 1px solid #ddd; */
+    /* border-radius: 4px; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.grid-row-controls {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-delete-row {
+    cursor: pointer;
+    font-size: 20px;
+    color: red;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.icon-move-row {
+    cursor: move;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+.grid-cell-element {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.grid-cell-element input {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.grid-cell-element button {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.grid-cell-element img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+.element_section {
+    /* display: flex;
+    justify-content: flex-start;
+    gap: 5px; */
+    position: relative;
+}
+.menu-item{
+    position: absolute;
+    top: 0;
+}
+.del_button {
+    height: 25px;
+}
+
+.edit_button {
+    height: 25px;
+    color: green;
+}
+
+.del_button:hover {
+    background-color: #fff;
+}
+
+.edit_button:hover {
+    background-color: #fff;
+}
+
+.save-btn {
+    width: 30px;
+}
+
+.edit-input {
+    width: 50% !important;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.edit-section {
+    display: flex;
+    align-items: center;
+}
+.btn-group-one {
+    background: #ffffff;
+    border-radius: 12px;
+    padding-left: 5px;
+    /* box-shadow: none; */
+    box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
+}
+.btn-group-two {
+    background: #4caf50;
+    border-radius: 12px;
+    padding-left: 5px;
+    /* box-shadow: none; */
+    box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
+}
+
