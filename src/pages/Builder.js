@@ -21,7 +21,7 @@ const Builder = () => {
     <div style={{ display: 'flex', height: '100vh' }}>
       <Sidebar onAddGrid={handleAddGrid} />
       <Dropzone selectedGrid={selectedGrid} items={items} setItems={setItems} setEditingIndex={setEditingIndex} setElements={setElements} setRows={setRows} />
-      <CustomizationPanel elements={elements} setElements={setElements} editIndex={editIndex} setEditingIndex={setEditingIndex} />
+      {/* <CustomizationPanel elements={elements} setElements={setElements} editIndex={editIndex} setEditingIndex={setEditingIndex} /> */}
     </div>
   );
 };

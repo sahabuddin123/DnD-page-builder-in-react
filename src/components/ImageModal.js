@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/css/Modal.css'; // Add appropriate CSS for styling
+import '../assets/css/ImageModal.css'; // Add appropriate CSS for styling
+
 
 const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
   const [preview, setPreview] = useState('https://via.placeholder.com/200');
@@ -48,7 +50,7 @@ const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content" style={{ maxWidth: '60%' }}>
+      <div className="modal-content">
         <div className="modal-header">
           <h3>Edit Image</h3>
           <button className="close-button" onClick={onClose}>X</button>
@@ -90,9 +92,9 @@ const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
           />
 
           {/* Image Properties */}
-          <label>Height (px):</label>
+          <label>Height (px or % / auto):</label>
           <input
-            type="number"
+            type="text"
             name="height"
             value={localImageData.height || ''}
             onChange={handleInputChange}
@@ -100,9 +102,9 @@ const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
             className="modal-input"
           />
 
-          <label>Width (px):</label>
+          <label>Width (px or % / auto):</label>
           <input
-            type="number"
+            type="text"
             name="width"
             value={localImageData.width || ''}
             onChange={handleInputChange}

@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { MdDelete, MdEdit } from 'react-icons/md';
-import Modal from './Modal'; // Modal Component Import
-import TableModal from './TableModal'; // Import the Table Modal Component
-import TableRowModal from './TableRowModal'; // Import the Table Row Modal Component
-import ListModal from './ListModal'; // Import the List Modal Component
-import ImageModal from './ImageModal'; // Import the Image Modal Component
+import { MdDelete, MdEdit, MdFormatPaint } from 'react-icons/md';
+import Modal from './Modal';
+import TableModal from './TableModal';
+import TableRowModal from './TableRowModal';
+import ListModal from './ListModal';
+import ImageModal from './ImageModal';
+import TableTwoModal from './TableTwoModal';
+import TableRowTwoModal from './TableRowTwoModal';
+import GridCellStyleModal from './GridCellStyleModal';
 
 const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: globalEditingIndex, setElements: setGlobalElements }) => {
   const [elements, setElements] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTableModalOpen, setIsTableModalOpen] = useState(false); // For Table Modal
-  const [isTableRowModalOpen, setIsTableRowModalOpen] = useState(false); // For Table Row Modal
-  const [isListModalOpen, setIsListModalOpen] = useState(false); // For List Modal
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false); // For Image Modal
+  const [isTableModalOpen, setIsTableModalOpen] = useState(false);
+  const [isTableRowModalOpen, setIsTableRowModalOpen] = useState(false);
+  const [isListModalOpen, setIsListModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isTableTwoModalOpen, setIsTableTwoModalOpen] = useState(false);
+  const [isTableRowTwoModalOpen, setIsTableRowTwoModalOpen] = useState(false);
+  const [isGridCellStyleModalOpen, setIsGridCellStyleModalOpen] = useState(false); // State for Grid Cell Style Modal
+  const [gridCellStyle, setGridCellStyle] = useState({ backgroundColor: '#ffffff', padding: '0px', margin: '0px' }); // State for Grid Cell Style
   const [currentElement, setCurrentElement] = useState({});
-  const [currentRowIndex, setCurrentRowIndex] = useState(null); // For tracking row to edit
-  const [rowStyles, setRowStyles] = useState({}); // Row styles state
+  const [currentRowIndex, setCurrentRowIndex] = useState(null);
+  const [rowStyles, setRowStyles] = useState({});
 
   useEffect(() => {
     setGlobalElements(elements);
-  }, [elements, setGlobalElements]); // Added setGlobalElements to dependencies
+  }, [elements, setGlobalElements]);
 
   const [, dropElement] = useDrop({
-    accept: ['text-p', 'text-heading', 'button', 'editor', 'image', 'table', 'one-list', 'two-list'],
+    accept: ['text-p', 'text-heading', 'button', 'editor', 'image', 'table', 'one-list', 'table-two'],
     drop: (item) => {
       const newElement = { type: item.type, content: '' };
 
@@ -35,6 +42,14 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
             { cells: ['', '', '', '', '', '', '', '', ''], styles: {} },
             { cells: ['', '', '', '', '', '', '', '', ''], styles: {} },
             { cells: ['', '', '', '', '', '', '', '', ''], styles: {} },
+          ],
+        };
+      } else if (item.type === 'table-two') {
+        newElement.content = {
+          headers: [' ', ' '],
+          rows: [
+            { cells: ['', ''], styles: {} },
+            { cells: ['', ''], styles: {} },
           ],
         };
       } else if (item.type === 'image') {
@@ -68,45 +83,60 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
     setCurrentElement(element);
 
     if (element.type === 'table') {
-      setIsTableModalOpen(true); // Open table modal
+      setIsTableModalOpen(true);
+    } else if (element.type === 'table-two') {
+      setIsTableTwoModalOpen(true);
     } else if (element.type === 'one-list') {
-      setIsListModalOpen(true); // Open list modal
+      setIsListModalOpen(true);
     } else if (element.type === 'image') {
-      setIsImageModalOpen(true); // Open image modal
+      setIsImageModalOpen(true);
     } else {
-      setIsModalOpen(true); // Open general content modal
+      setIsModalOpen(true);
     }
   };
 
   const handleRowEdit = (rowIndex) => {
     setCurrentRowIndex(rowIndex);
-    setRowStyles(elements[editingIndex].content.rows[rowIndex].styles || {}); // Set initial row styles
-    setIsTableRowModalOpen(true); // Open row style modal
+    setRowStyles(elements[editingIndex].content.rows[rowIndex].styles || {});
+    setIsTableRowModalOpen(true);
+  };
+
+  const handleRowTwoEdit = (rowIndex) => {
+    setCurrentRowIndex(rowIndex);
+    setRowStyles(elements[editingIndex].content.rows[rowIndex].styles || {});
+    setIsTableRowTwoModalOpen(true);
   };
 
   const handleSave = (updatedElement) => {
     const updatedElements = [...elements];
-    updatedElements[editingIndex] = { ...currentElement, ...updatedElement };  // Merge updates
+    updatedElements[editingIndex] = { ...currentElement, ...updatedElement };
     setElements(updatedElements);
     setIsModalOpen(false);
-    setIsTableModalOpen(false);  // Close both modals
-    setIsListModalOpen(false);   // Close list modal
-    setIsImageModalOpen(false);  // Close image modal
+    setIsTableModalOpen(false);
+    setIsListModalOpen(false);
+    setIsImageModalOpen(false);
+    setIsTableTwoModalOpen(false);
   };
 
   const handleRowSave = (updatedRowStyles) => {
     const updatedElements = [...elements];
-    updatedElements[editingIndex].content.rows[currentRowIndex].styles = updatedRowStyles; // Update row styles
+    updatedElements[editingIndex].content.rows[currentRowIndex].styles = updatedRowStyles;
     setElements(updatedElements);
-    setIsTableRowModalOpen(false); // Close row modal
+    setIsTableRowModalOpen(false);
   };
 
-  // handleSave function for Image component
+  const handleRowTwoSave = (updatedRowStyles) => {
+    const updatedElements = [...elements];
+    updatedElements[editingIndex].content.rows[currentRowIndex].styles = updatedRowStyles;
+    setElements(updatedElements);
+    setIsTableRowTwoModalOpen(false);
+  };
+
   const handleImageSave = (updatedImage) => {
     const updatedElements = [...elements];
-    updatedElements[editingIndex].content = { ...updatedImage }; // Merge updates to content
+    updatedElements[editingIndex].content = { ...updatedImage };
     setElements(updatedElements);
-    setIsImageModalOpen(false); // Close the image modal
+    setIsImageModalOpen(false);
   };
 
   const handleInputChange = (e) => {
@@ -152,11 +182,11 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
                 {element.content.rows.map((row, rowIndex) => (
                   <tr key={rowIndex} style={row.styles || {}}>
                     {row.cells.map((cell, cellIndex) => (
-                      <td key={cellIndex} style={{ border: '1px solid #ddd', padding: '8px'}}>{cell}</td>
+                      <td key={cellIndex} style={{ border: '1px solid #ddd', padding: '8px' }}>{cell}</td>
                     ))}
-                    <td style={{position: 'relative', background: 'transparent' }}>
+                    <td style={{ position: 'relative', background: 'transparent' }}>
                       <span style={{ position: 'absolute', right: '0' }}>
-                        <button onClick={() => handleRowEdit(rowIndex)} style={{color: 'blue', background: 'transparent', margin: '0', padding: '0',}}><MdEdit /></button>
+                        <button onClick={() => handleRowEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0', }}><MdEdit /></button>
                       </span>
                     </td>
                   </tr>
@@ -165,14 +195,35 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
             </table>
           </div>
         );
-        case 'one-list':
-      return (
-        <ul style={{ color: element.content.fontColor, fontWeight: element.content.fontWeight, fontStyle: element.content.fontStyle, textAlign: element.content.textAlign, listStyleType: element.content.listStyleType }}>
-          {element.content.items.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      );
+      case 'table-two':
+        return (
+          <div style={{ margin: '10px 0', position: 'relative' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <tbody>
+                {element.content.rows.map((row, rowIndex) => (
+                  <tr key={rowIndex} style={row.styles || {}}>
+                    {row.cells.map((cell, cellIndex) => (
+                      <td key={cellIndex} style={{ border: '1px solid #ddd', padding: '8px' }}>{cell}</td>
+                    ))}
+                    <td style={{ position: 'relative', background: 'transparent' }}>
+                      <span style={{ position: 'absolute', right: '0' }}>
+                        <button onClick={() => handleRowTwoEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0' }}><MdEdit /></button>
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'one-list':
+        return (
+          <ul style={{ color: element.content.fontColor, fontWeight: element.content.fontWeight, fontStyle: element.content.fontStyle, textAlign: element.content.textAlign, listStyleType: element.content.listStyleType }}>
+            {element.content.items.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        );
       case 'image':
         return (
           <div style={{ textAlign: element.content.alignment || 'left' }}>
@@ -180,8 +231,8 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
               src={element.content.src || 'https://via.placeholder.com/200'}
               alt="Editable content"
               style={{
-                width: element.content.width ? `${element.content.width}px` : '200px',
-                height: element.content.height ? `${element.content.height}px` : '200px',
+                width: element.content.width ? `${element.content.width}` : '200px',
+                height: element.content.height ? `${element.content.height}` : '200px',
                 borderRadius: element.content.borderRadius ? `${element.content.borderRadius}px` : '0px',
                 float: element.content.float || 'none',
               }}
@@ -195,7 +246,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
 
   return (
     <div ref={dropElement} className="grid-cell-wrapper">
-      <div className="grid-cell">
+      <div className="grid-cell" style={gridCellStyle}>
         <div className="grid-cell-content">
           {elements.map((element, index) => (
             <div key={index} className="grid-cell-element">
@@ -210,6 +261,10 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           ))}
           {!elements.length && 'Drop here'}
         </div>
+        {/* Edit Style Button */}
+        <button onClick={() => setIsGridCellStyleModalOpen(true)} className="icon-style-edit-button" style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', padding: '3px 10px', fontSize: '12px' }}>
+          <MdFormatPaint />
+        </button>
       </div>
 
       {/* General Modal Component */}
@@ -220,7 +275,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
         element={currentElement}
         setElement={setCurrentElement}
         handleInputChange={handleInputChange}
-        handleAlignmentChange={handleAlignmentChange} // Pass handleAlignmentChange here
+        handleAlignmentChange={handleAlignmentChange}
       />
 
       {/* Table Modal Component */}
@@ -229,7 +284,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           isOpen={isTableModalOpen}
           onClose={() => setIsTableModalOpen(false)}
           onSave={handleSave}
-          tableData={currentElement.content} // Ensure table data is passed correctly
+          tableData={currentElement.content}
           setTableData={(data) => setCurrentElement((prev) => ({ ...prev, content: data }))}
         />
       )}
@@ -240,8 +295,30 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           isOpen={isTableRowModalOpen}
           onClose={() => setIsTableRowModalOpen(false)}
           onSave={handleRowSave}
-          rowStyles={rowStyles} // Pass current row styles
-          setRowStyles={setRowStyles} // Correctly set row styles function
+          rowStyles={rowStyles}
+          setRowStyles={setRowStyles}
+        />
+      )}
+
+      {/* Table Two Modal Component */}
+      {isTableTwoModalOpen && (
+        <TableTwoModal
+          isOpen={isTableTwoModalOpen}
+          onClose={() => setIsTableTwoModalOpen(false)}
+          onSave={handleSave}
+          tableData={currentElement.content}
+          setTableData={(data) => setCurrentElement((prev) => ({ ...prev, content: data }))}
+        />
+      )}
+
+      {/* Table Row Two Modal Component */}
+      {isTableRowTwoModalOpen && (
+        <TableRowTwoModal
+          isOpen={isTableRowTwoModalOpen}
+          onClose={() => setIsTableRowTwoModalOpen(false)}
+          onSave={handleRowTwoSave}
+          rowStyles={rowStyles}
+          setRowStyles={setRowStyles}
         />
       )}
 
@@ -261,9 +338,21 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
         <ImageModal
           isOpen={isImageModalOpen}
           onClose={() => setIsImageModalOpen(false)}
-          onSave={handleImageSave}  // Use handleImageSave for saving images
-          imageData={currentElement.content} // Pass image data correctly
+          onSave={handleImageSave}
+          imageData={currentElement.content}
           setImageData={(data) => setCurrentElement((prev) => ({ ...prev, content: data }))}
+        />
+      )}
+
+      {/* Grid Cell Style Modal Component */}
+      {isGridCellStyleModalOpen && (
+        <GridCellStyleModal
+          isOpen={isGridCellStyleModalOpen}
+          onClose={() => setIsGridCellStyleModalOpen(false)}
+          onSave={(newStyleData) => {
+            setGridCellStyle(newStyleData);
+          }}
+          styleData={gridCellStyle}
         />
       )}
     </div>

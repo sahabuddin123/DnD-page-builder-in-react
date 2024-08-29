@@ -13,8 +13,6 @@
 /* Grid and Grid Cells */
 .grid {
     display: grid;
-    /* gap: 5px; */
-    /* margin-bottom: 10px; */
 }
 
 .grid-cell-wrapper {
@@ -26,7 +24,6 @@
     padding: 10px;
     border: 1px dashed #ccc;
     border-collapse: collapse;
-    background-color: #f7f7f7;
     text-align: center;
     position: relative;
 }
@@ -69,8 +66,6 @@
     gap: 10px;
     background-color: #f9f9f9;
     padding: 2px;
-    /* border: 1px solid #ddd; */
-    /* border-radius: 4px; */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     position: relative;
 }
@@ -105,7 +100,6 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-
 .grid-cell-element {
     margin-bottom: 10px;
     position: relative;
@@ -121,26 +115,16 @@
     margin-top: 5px;
 }
 
-.grid-cell-element img {
-    /* max-width: 100%; */
-    height: auto;
-    /* display: block; */
-    margin-bottom: 5px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    background-color: #f9f9f9;
-}
-
 .element_section {
-    /* display: flex;
-    justify-content: flex-start;
-    gap: 5px; */
     position: relative;
 }
-.menu-item{
+
+.menu-item {
     position: absolute;
     top: 0;
+    left: 0; /* Edit Style Button to Right */
 }
+
 .del_button {
     height: 25px;
 }
@@ -156,6 +140,22 @@
 
 .edit_button:hover {
     background-color: #fff;
+}
+
+.icon-style-edit-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-style-edit-button:hover {
+    background-color: #e0e0e0;
 }
 
 .save-btn {
@@ -174,18 +174,27 @@
     display: flex;
     align-items: center;
 }
+
 .btn-group-one {
     background: #ffffff;
     border-radius: 12px;
     padding-left: 5px;
-    /* box-shadow: none; */
     box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
 }
+
 .btn-group-two {
     background: #4caf50;
     border-radius: 12px;
     padding-left: 5px;
-    /* box-shadow: none; */
     box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
 }
-
+.edit-grid-cell-btn {
+    position: absolute;
+    top: -15px;
+    right: -2px;
+    cursor: pointer;
+    padding: 3px 10px;
+    font-size: 12px;
+    z-index: 11;
+    color: red;
+}
