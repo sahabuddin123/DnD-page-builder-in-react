@@ -37,7 +37,7 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
       textDecoration: element.isUnderline ? 'underline' : 'none',
       textAlign: element.textAlign,
       color: element.color,
-      fontSize: element.fontSize ? `${element.fontSize}px` : '16px', // Ensure fontSize is applied correctly
+      fontSize: element.fontSize ? `${element.fontSize}px` : '16px',
     };
   };
 

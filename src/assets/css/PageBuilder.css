@@ -122,9 +122,9 @@
 }
 
 .grid-cell-element img {
-    max-width: 100%;
+    /* max-width: 100%; */
     height: auto;
-    display: block;
+    /* display: block; */
     margin-bottom: 5px;
     border: 1px solid #ccc;
     padding: 5px;

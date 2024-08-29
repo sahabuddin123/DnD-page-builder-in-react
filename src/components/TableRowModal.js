@@ -40,16 +40,27 @@ const TableRowModal = ({ isOpen, onClose, onSave, rowStyles = {}, setRowStyles }
     setRowStyles((prev) => ({ ...prev, isUnderline: !prev.isUnderline }));
   };
 
+//   const getTextStyle = () => {
+//     return {
+//       fontWeight: currentStyles.fontWeight,
+//       textTransform: currentStyles.textTransform,
+//       fontStyle: currentStyles.isItalic ? 'italic' : 'normal',
+//       textDecoration: currentStyles.isUnderline ? 'underline' : 'none',
+//       textAlign: currentStyles.textAlign,
+//     };
+//   };
+
   const getTextStyle = () => {
     return {
-      fontWeight: currentStyles.fontWeight,
-      textTransform: currentStyles.textTransform,
-      fontStyle: currentStyles.isItalic ? 'italic' : 'normal',
-      textDecoration: currentStyles.isUnderline ? 'underline' : 'none',
-      textAlign: currentStyles.textAlign,
+        fontWeight: rowStyles.fontWeight,
+        textTransform: rowStyles.textTransform,
+        fontStyle: rowStyles.isItalic ? 'italic' : 'normal',
+        textDecoration: rowStyles.isUnderline ? 'underline' : 'none',
+        textAlign: rowStyles.textAlign,
     };
-  };
-
+};
+//   fontStyle: element.isItalic ? 'italic' : 'normal',
+//   textDecoration: element.isUnderline ? 'underline' : 'none',
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -113,3 +124,4 @@ const TableRowModal = ({ isOpen, onClose, onSave, rowStyles = {}, setRowStyles }
 };
 
 export default TableRowModal;
+

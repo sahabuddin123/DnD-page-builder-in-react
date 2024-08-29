@@ -87,10 +87,10 @@ const Sidebar = ({ onAddGrid }) => {
         <DraggableElement type="image" icon={FaImage} title="Image" />
         <DraggableElement type="table" icon={FaTable} title="Table" />
         <DraggableElement type="one-list" icon={FaList} title="One List" />
-        <DraggableElement type="two-list" icon={FaRegListAlt} title="Two List" />
+        {/* <DraggableElement type="two-list" icon={FaRegListAlt} title="Two List" /> */}
         <DraggableElement type="text-p" icon={FaTextHeight} title="Text P" />
         <DraggableElement type="text-heading" icon={FaHeading} title="Text Heading" />
-        <DraggableElement type="button" icon={FaEnvelope} title="Button" />
+        {/* <DraggableElement type="button" icon={FaEnvelope} title="Button" /> */}
         <DraggableElement type="editor" icon={FaTerminal} title="Editor" />
       </CollapsibleSection>
 
