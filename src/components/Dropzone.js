@@ -1,34 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from './Grid';
-import Element from './Element';
-import { useDrop } from 'react-dnd';
-import '../assets/css/PageBuilder.css';
 
 const Dropzone = ({ selectedGrid, items, setItems, setEditingIndex, setElements, setRows }) => {
+  const [rows, setLocalRows] = useState([]);
 
-  const [, drop] = useDrop({
-    accept: ['grid', 'image', 'table', 'one-list', 'two-list', 'text-p', 'text-heading', 'button', 'editor'],
-    drop: (item) => {
-      if (item && item.type) {
-        setItems((prevItems) => [...prevItems, item.type]);
-      }
-    },
-  });
-
-  React.useEffect(() => {
+  useEffect(() => {
+    // When items change, add a new row for the selected grid type
     if (selectedGrid) {
-      setItems((prevItems) => [...prevItems, `grid-${selectedGrid}`]);
+      const newRow = { id: `row-${Date.now()}`, gridType: selectedGrid };
+      setLocalRows((prevRows) => [...prevRows, newRow]);
     }
-  }, [selectedGrid]);
+  }, [items]); // Trigger whenever items array changes
+
+  useEffect(() => {
+    setRows(rows); // Sync local rows with global state
+  }, [rows, setRows]);
 
   return (
-    <div className="dropzone" ref={drop}>
-      {items.map((item, index) => (
-        typeof item === 'string' && item.startsWith('grid-') ? (  // Ensure item is a string before calling startsWith
-          <Grid key={index} gridType={item.replace('grid-', '')} setEditingIndex={setEditingIndex} setElements={setElements} setRows={setRows} />
-        ) : ''
-        // <Element key={index} type={item} />
-
+    <div className="dropzone">
+      {rows.map((row, index) => (
+        <Grid
+          key={row.id}
+          gridType={row.gridType}
+          setEditingIndex={setEditingIndex}
+          setElements={setElements}
+          setRows={setRows}
+        />
       ))}
     </div>
   );

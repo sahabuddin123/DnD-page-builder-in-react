@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import Dropzone from '../components/Dropzone';
-import CustomizationPanel from '../components/CustomizationPanel';
 
 const Builder = () => {
   const [selectedGrid, setSelectedGrid] = useState('');
@@ -10,21 +9,24 @@ const Builder = () => {
   const [rows, setRows] = useState([]);
   const [elements, setElements] = useState([]);
 
-
-  // console.log(items, rows, elements);
-
-
   const handleAddGrid = (gridType) => {
-    setSelectedGrid(gridType);
+    setSelectedGrid(gridType); // Update selected grid type
+    setItems((prevItems) => [...prevItems, gridType]); // Add the grid type to items array
   };
+
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <Sidebar onAddGrid={handleAddGrid} />
-      <Dropzone selectedGrid={selectedGrid} items={items} setItems={setItems} setEditingIndex={setEditingIndex} setElements={setElements} setRows={setRows} />
-      {/* <CustomizationPanel elements={elements} setElements={setElements} editIndex={editIndex} setEditingIndex={setEditingIndex} /> */}
+      <Dropzone
+        selectedGrid={selectedGrid}
+        items={items}
+        setItems={setItems}
+        setEditingIndex={setEditingIndex}
+        setElements={setElements}
+        setRows={setRows}
+      />
     </div>
   );
 };
 
 export default Builder;
-

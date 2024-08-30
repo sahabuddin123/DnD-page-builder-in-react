@@ -1,7 +1,7 @@
 .sidebar {
     padding: 10px;
     border-right: 1px solid #ccc;
-    width: 200px;
+    width: 270px;
   }
   
   .collapsible-section {
@@ -40,7 +40,7 @@
     border-radius: 4px;
     text-align: left;
     /* width: 100%; */
-    justify-content: space-around; /* Center the content horizontally */
+    justify-content: center; /* Center the content horizontally */
   }
   
   .sidebar button:hover,

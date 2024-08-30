@@ -6,12 +6,16 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import App from './App';
 import './App.css';
 
+// Create the root element for React DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <DndProvider backend={HTML5Backend}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </DndProvider>
-);
 
+// Render the app within the DnDProvider and BrowserRouter
+root.render(
+  <React.StrictMode>
+    <DndProvider backend={HTML5Backend}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </DndProvider>
+  </React.StrictMode>
+);
