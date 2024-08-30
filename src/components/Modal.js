@@ -38,6 +38,14 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
       textAlign: element.textAlign,
       color: element.color,
       fontSize: element.fontSize ? `${element.fontSize}px` : '16px',
+      paddingTop: element.paddingTop || '0px',
+      paddingRight: element.paddingRight || '0px',
+      paddingBottom: element.paddingBottom || '0px',
+      paddingLeft: element.paddingLeft || '0px',
+      marginTop: element.marginTop || '0px',
+      marginRight: element.marginRight || '0px',
+      marginBottom: element.marginBottom || '0px',
+      marginLeft: element.marginLeft || '0px',
     };
   };
 
@@ -109,6 +117,23 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
 
           <label onClick={() => handleLabelClick('font-color-input')}>Font Color:</label>
           <input id="font-color-input" type="color" name="color" value={element.color || '#000000'} onChange={handleInputChange} className="modal-input" />
+
+          {/* Padding and Margin Inputs */}
+          <label>Padding (Top Right Bottom Left):</label>
+          <div className="padding-margin-inputs">
+            <input type="text" name="paddingTop" value={element.paddingTop || '0px'} onChange={handleInputChange} placeholder="Top" />
+            <input type="text" name="paddingRight" value={element.paddingRight || '0px'} onChange={handleInputChange} placeholder="Right" />
+            <input type="text" name="paddingBottom" value={element.paddingBottom || '0px'} onChange={handleInputChange} placeholder="Bottom" />
+            <input type="text" name="paddingLeft" value={element.paddingLeft || '0px'} onChange={handleInputChange} placeholder="Left" />
+          </div>
+
+          <label>Margin (Top Right Bottom Left):</label>
+          <div className="padding-margin-inputs">
+            <input type="text" name="marginTop" value={element.marginTop || '0px'} onChange={handleInputChange} placeholder="Top" />
+            <input type="text" name="marginRight" value={element.marginRight || '0px'} onChange={handleInputChange} placeholder="Right" />
+            <input type="text" name="marginBottom" value={element.marginBottom || '0px'} onChange={handleInputChange} placeholder="Bottom" />
+            <input type="text" name="marginLeft" value={element.marginLeft || '0px'} onChange={handleInputChange} placeholder="Left" />
+          </div>
         </div>
 
         <div className="modal-footer">

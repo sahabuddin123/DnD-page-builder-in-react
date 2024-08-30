@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../assets/css/Modal.css'; // Add appropriate CSS for styling
 import '../assets/css/ImageModal.css'; // Add appropriate CSS for styling
 
-
 const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
   const [preview, setPreview] = useState('https://via.placeholder.com/200');
   const [localImageData, setLocalImageData] = useState({});
 
   useEffect(() => {
-    // Set preview and localImageData whenever imageData changes
     setPreview(imageData.src || 'https://via.placeholder.com/200');
     setLocalImageData(imageData);
   }, [imageData]);
@@ -121,6 +119,70 @@ const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
             placeholder="Border Radius"
             className="modal-input"
           />
+
+          <label>Padding (Top Right Bottom Left):</label>
+          <div className="input-group">
+            <input
+              type="text"
+              name="paddingTop"
+              value={localImageData.paddingTop || '0px'}
+              onChange={handleInputChange}
+              placeholder="Top"
+            />
+            <input
+              type="text"
+              name="paddingRight"
+              value={localImageData.paddingRight || '0px'}
+              onChange={handleInputChange}
+              placeholder="Right"
+            />
+            <input
+              type="text"
+              name="paddingBottom"
+              value={localImageData.paddingBottom || '0px'}
+              onChange={handleInputChange}
+              placeholder="Bottom"
+            />
+            <input
+              type="text"
+              name="paddingLeft"
+              value={localImageData.paddingLeft || '0px'}
+              onChange={handleInputChange}
+              placeholder="Left"
+            />
+          </div>
+
+          <label>Margin (Top Right Bottom Left):</label>
+          <div className="input-group">
+            <input
+              type="text"
+              name="marginTop"
+              value={localImageData.marginTop || '0px'}
+              onChange={handleInputChange}
+              placeholder="Top"
+            />
+            <input
+              type="text"
+              name="marginRight"
+              value={localImageData.marginRight || '0px'}
+              onChange={handleInputChange}
+              placeholder="Right"
+            />
+            <input
+              type="text"
+              name="marginBottom"
+              value={localImageData.marginBottom || '0px'}
+              onChange={handleInputChange}
+              placeholder="Bottom"
+            />
+            <input
+              type="text"
+              name="marginLeft"
+              value={localImageData.marginLeft || '0px'}
+              onChange={handleInputChange}
+              placeholder="Left"
+            />
+          </div>
 
           <label>Float:</label>
           <select name="float" value={localImageData.float || 'none'} onChange={handleInputChange} className="modal-input">

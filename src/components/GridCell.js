@@ -9,6 +9,7 @@ import ImageModal from './ImageModal';
 import TableTwoModal from './TableTwoModal';
 import TableRowTwoModal from './TableRowTwoModal';
 import GridCellStyleModal from './GridCellStyleModal';
+import ReadymadeModal from './ReadymadeModal'; // Readymade Modal ইম্পোর্ট
 
 const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: globalEditingIndex, setElements: setGlobalElements }) => {
   const [elements, setElements] = useState([]);
@@ -20,18 +21,25 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isTableTwoModalOpen, setIsTableTwoModalOpen] = useState(false);
   const [isTableRowTwoModalOpen, setIsTableRowTwoModalOpen] = useState(false);
-  const [isGridCellStyleModalOpen, setIsGridCellStyleModalOpen] = useState(false); // State for Grid Cell Style Modal
-  const [gridCellStyle, setGridCellStyle] = useState({ backgroundColor: '#ffffff', padding: '0px', margin: '0px' }); // State for Grid Cell Style
+  const [isGridCellStyleModalOpen, setIsGridCellStyleModalOpen] = useState(false);
+  const [gridCellStyle, setGridCellStyle] = useState({ backgroundColor: '#ffffff', padding: '0px', margin: '0px' });
   const [currentElement, setCurrentElement] = useState({});
   const [currentRowIndex, setCurrentRowIndex] = useState(null);
   const [rowStyles, setRowStyles] = useState({});
+
+  // Readymade Section-এর জন্য নতুন স্টেট
+  const [isReadymadeModalOpen, setIsReadymadeModalOpen] = useState(false);
+  const [currentReadymadeElement, setCurrentReadymadeElement] = useState({});
 
   useEffect(() => {
     setGlobalElements(elements);
   }, [elements, setGlobalElements]);
 
   const [, dropElement] = useDrop({
-    accept: ['text-p', 'text-heading', 'button', 'editor', 'image', 'table', 'one-list', 'table-two'],
+    accept: ['text-p', 'text-heading', 'image', 'table', 'one-list', 'table-two',
+      'invoice-header', 'invoice-logo', 'company-logo', 'company-address', 'client-address',
+      'bank-details', 'invoice-title', 'invoice-table', 'invoice-details',
+      'total-amount-table', 'qr-code', 'invoice-footer'],
     drop: (item) => {
       const newElement = { type: item.type, content: '' };
 
@@ -54,12 +62,20 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
         };
       } else if (item.type === 'image') {
         newElement.content = {
-          src: 'https://via.placeholder.com/200', // Default image source
-          height: 200,
-          width: 200,
+          src: 'https://via.placeholder.com/200',
+          height: '200px',
+          width: '200px',
           borderRadius: 0,
           float: 'none',
           alignment: 'center',
+          paddingTop: '0px',
+          paddingRight: '0px',
+          paddingBottom: '0px',
+          paddingLeft: '0px',
+          marginTop: '0px',
+          marginRight: '0px',
+          marginBottom: '0px',
+          marginLeft: '0px',
         };
       } else if (item.type === 'one-list') {
         newElement.content = {
@@ -70,6 +86,31 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           listStyleType: 'none',
           ordered: false,
           textAlign: 'left',
+          paddingTop: '0px',
+          paddingRight: '0px',
+          paddingBottom: '0px',
+          paddingLeft: '0px',
+          marginTop: '0px',
+          marginRight: '0px',
+          marginBottom: '0px',
+          marginLeft: '0px',
+        };
+      } else {
+        // Readymade Section elements
+        newElement.content = {
+          type: item.type,
+          textAlign: 'left',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          color: '#000000',
+          paddingTop: '0px',
+          paddingRight: '0px',
+          paddingBottom: '0px',
+          paddingLeft: '0px',
+          marginTop: '0px',
+          marginRight: '0px',
+          marginBottom: '0px',
+          marginLeft: '0px'
         };
       }
 
@@ -90,9 +131,27 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
       setIsListModalOpen(true);
     } else if (element.type === 'image') {
       setIsImageModalOpen(true);
+    } else if (element.type.startsWith('invoice') || element.type.startsWith('company') ||
+      element.type === 'client-address' || element.type === 'bank-details' ||
+      element.type === 'qr-code') {
+      handleReadymadeEdit(index);
     } else {
       setIsModalOpen(true);
     }
+  };
+
+  const handleReadymadeEdit = (index) => {
+    const element = elements[index];
+    setEditingIndex(index);
+    setCurrentReadymadeElement(element.content); // Update to use the content property
+    setIsReadymadeModalOpen(true);
+  };
+
+  const handleReadymadeSave = (updatedElement) => {
+    const updatedElements = [...elements];
+    updatedElements[editingIndex].content = { ...updatedElement }; // Properly save the updated content
+    setElements(updatedElements);
+    setIsReadymadeModalOpen(false);
   };
 
   const handleRowEdit = (rowIndex) => {
@@ -157,14 +216,46 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
     switch (element.type) {
       case 'text-heading':
         return (
-          <h1 style={{ textAlign: element.textAlign, fontSize: element.fontSize, fontWeight: element.fontWeight, color: element.color, fontStyle: element.isItalic ? 'italic' : 'normal', textDecoration: element.isUnderline ? 'underline' : 'none', textTransform: element.textTransform }}>
-            {element.content || 'Header Text'}
+          <h1 style={{
+            textAlign: element.textAlign,
+            fontSize: element.fontSize,
+            fontWeight: element.fontWeight,
+            color: element.color,
+            fontStyle: element.isItalic ? 'italic' : 'normal',
+            textDecoration: element.isUnderline ? 'underline' : 'none',
+            textTransform: element.textTransform,
+            paddingTop: element.paddingTop || '0px',
+            paddingRight: element.paddingRight || '0px',
+            paddingBottom: element.paddingBottom || '0px',
+            paddingLeft: element.paddingLeft || '0px',
+            marginTop: element.marginTop || '0px',
+            marginRight: element.marginRight || '0px',
+            marginBottom: element.marginBottom || '0px',
+            marginLeft: element.marginLeft || '0px'
+          }}>
+            {element.content.text || 'Header Text'} {/* Ensure content is accessed properly */}
           </h1>
         );
       case 'text-p':
         return (
-          <p style={{ textAlign: element.textAlign, fontSize: element.fontSize, fontWeight: element.fontWeight, color: element.color, fontStyle: element.isItalic ? 'italic' : 'normal', textDecoration: element.isUnderline ? 'underline' : 'none', textTransform: element.textTransform }}>
-            {element.content || 'This is a paragraph.'}
+          <p style={{
+            textAlign: element.textAlign,
+            fontSize: element.fontSize,
+            fontWeight: element.fontWeight,
+            color: element.color,
+            fontStyle: element.isItalic ? 'italic' : 'normal',
+            textDecoration: element.isUnderline ? 'underline' : 'none',
+            textTransform: element.textTransform,
+            paddingTop: element.paddingTop || '0px',
+            paddingRight: element.paddingRight || '0px',
+            paddingBottom: element.paddingBottom || '0px',
+            paddingLeft: element.paddingLeft || '0px',
+            marginTop: element.marginTop || '0px',
+            marginRight: element.marginRight || '0px',
+            marginBottom: element.marginBottom || '0px',
+            marginLeft: element.marginLeft || '0px'
+          }}>
+            {element.content.text || 'This is a paragraph.'} {/* Ensure content is accessed properly */}
           </p>
         );
       case 'table':
@@ -186,7 +277,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
                     ))}
                     <td style={{ position: 'relative', background: 'transparent' }}>
                       <span style={{ position: 'absolute', right: '0' }}>
-                        <button onClick={() => handleRowEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0', }}><MdEdit /></button>
+                        <button onClick={() => handleRowEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0' }}><MdEdit /></button>
                       </span>
                     </td>
                   </tr>
@@ -218,7 +309,21 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
         );
       case 'one-list':
         return (
-          <ul style={{ color: element.content.fontColor, fontWeight: element.content.fontWeight, fontStyle: element.content.fontStyle, textAlign: element.content.textAlign, listStyleType: element.content.listStyleType }}>
+          <ul style={{
+            color: element.content.fontColor,
+            fontWeight: element.content.fontWeight,
+            fontStyle: element.content.fontStyle,
+            textAlign: element.content.textAlign,
+            listStyleType: element.content.listStyleType,
+            paddingTop: element.content.paddingTop || '0px',
+            paddingRight: element.content.paddingRight || '0px',
+            paddingBottom: element.content.paddingBottom || '0px',
+            paddingLeft: element.content.paddingLeft || '0px',
+            marginTop: element.content.marginTop || '0px',
+            marginRight: element.content.marginRight || '0px',
+            marginBottom: element.content.marginBottom || '0px',
+            marginLeft: element.content.marginLeft || '0px'
+          }}>
             {element.content.items.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
@@ -235,10 +340,53 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
                 height: element.content.height ? `${element.content.height}` : '200px',
                 borderRadius: element.content.borderRadius ? `${element.content.borderRadius}px` : '0px',
                 float: element.content.float || 'none',
+                paddingTop: element.content.paddingTop || '0px',
+                paddingRight: element.content.paddingRight || '0px',
+                paddingBottom: element.content.paddingBottom || '0px',
+                paddingLeft: element.content.paddingLeft || '0px',
+                marginTop: element.content.marginTop || '0px',
+                marginRight: element.content.marginRight || '0px',
+                marginBottom: element.content.marginBottom || '0px',
+                marginLeft: element.content.marginLeft || '0px',
               }}
             />
           </div>
         );
+      case 'invoice-header':
+      case 'invoice-logo':
+      case 'company-logo':
+      case 'company-address':
+      case 'client-address':
+      case 'bank-details':
+      case 'invoice-title':
+      case 'invoice-table':
+      case 'invoice-details':
+      case 'total-amount-table':
+      case 'qr-code':
+      case 'invoice-footer':
+        return (
+          <div
+            // onClick={() => handleReadymadeEdit(index)}
+            style={{
+              cursor: 'default',
+              textAlign: element.content.textAlign,
+              fontWeight: element.content.fontWeight,
+              fontStyle: element.content.fontStyle,
+              color: element.content.color,
+              paddingTop: element.content.paddingTop,
+              paddingRight: element.content.paddingRight,
+              paddingBottom: element.content.paddingBottom,
+              paddingLeft: element.content.paddingLeft,
+              marginTop: element.content.marginTop,
+              marginRight: element.content.marginRight,
+              marginBottom: element.content.marginBottom,
+              marginLeft: element.content.marginLeft,
+            }}
+          >
+            <h4>{element.type.replace('-', ' ').toUpperCase()}</h4>
+          </div>
+        );
+
       default:
         return <div>Default Element</div>;
     }
@@ -353,6 +501,17 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
             setGridCellStyle(newStyleData);
           }}
           styleData={gridCellStyle}
+        />
+      )}
+
+      {/* Readymade Section Modal Component */}
+      {isReadymadeModalOpen && (
+        <ReadymadeModal
+          isOpen={isReadymadeModalOpen}
+          onClose={() => setIsReadymadeModalOpen(false)}
+          onSave={handleReadymadeSave}
+          elementData={currentReadymadeElement}
+          setElementData={setCurrentReadymadeElement} // Properly use setElementData
         />
       )}
     </div>

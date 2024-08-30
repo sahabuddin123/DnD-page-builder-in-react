@@ -85,7 +85,7 @@ const Sidebar = ({ onAddGrid }) => {
       {/* Element Section */}
       <CollapsibleSection title="Element">
         <DraggableElement type="image" icon={FaImage} title="Image" />
-        
+
         <DraggableElement type="one-list" icon={FaList} title="One List" />
         {/* <DraggableElement type="two-list" icon={FaRegListAlt} title="Two List" /> */}
         <DraggableElement type="text-p" icon={FaTextHeight} title="Text P" />
@@ -98,7 +98,7 @@ const Sidebar = ({ onAddGrid }) => {
       {/* Readymade Section */}
       <CollapsibleSection title="Readymade Section">
         <DraggableElement type="invoice-header" icon={FaFileInvoice} title="Invoice Header" />
-        <DraggableElement type="invoice-logo" icon={FaWarehouse} />
+        <DraggableElement type="invoice-logo" icon={FaWarehouse} title="Invoice Logo" />
         <DraggableElement type="company-logo" icon={FaAddressCard} title="Company Logo" />
         <DraggableElement type="company-address" icon={FaBuilding} title="Company Address" />
         <DraggableElement type="client-address" icon={FaUniversity} title="Client Address" />
@@ -110,6 +110,7 @@ const Sidebar = ({ onAddGrid }) => {
         <DraggableElement type="qr-code" icon={FaBarcode} title="QR Code" />
         <DraggableElement type="invoice-footer" icon={FaSignature} title="Invoice Footer" />
       </CollapsibleSection>
+
     </div>
   );
 };
