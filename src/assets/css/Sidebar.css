@@ -53,15 +53,15 @@
     margin-right: 8px;
   }
   
-  .invoice-element {
+  /* .invoice-element {
   background-color: #fff;
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-bottom: 16px;
-}
+} */
 
-.invoice-element h4 {
+/* .invoice-element h4 {
   margin: 0 0 12px;
 }
 
@@ -84,4 +84,4 @@
   padding: 6px 12px;
   margin-top: 8px;
   cursor: pointer;
-}
+} */

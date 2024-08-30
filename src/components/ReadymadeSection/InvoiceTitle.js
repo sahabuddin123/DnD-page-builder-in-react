@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const InvoiceTitle = ({ content, onUpdate, onDelete }) => {
+const InvoiceTitle = ({ onUpdate, onDelete, style }) => {
+  const [invoiceTitle, setInvoiceTitle] = useState('');
+
+  useEffect(() => {
+    axios.get('/api/Invoice')
+      .then(response => {
+        setInvoiceTitle(response.data.title); // Assuming the API returns a title field
+      })
+      .catch(error => {
+        console.error("There was an error fetching the invoice title!", error);
+      });
+  }, []);
+
   return (
-    <div className="invoice-element">
-      <h3>{content}</h3>
-      <button onClick={onUpdate}>Edit</button>
-      <button onClick={onDelete}>Delete</button>
+    <div className="invoice-element" style={style}>
+      <h2 style={style}>{invoiceTitle}</h2>
     </div>
   );
 };

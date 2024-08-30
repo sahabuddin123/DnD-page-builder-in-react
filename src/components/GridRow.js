@@ -1,5 +1,3 @@
-// GridRow.js
-
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { FaTrashAlt, FaArrowsAlt } from 'react-icons/fa';
@@ -13,7 +11,6 @@ const ItemTypes = {
 const GridRow = ({ row, rowIndex, moveRow, removeRow, gridTemplate, removeGridCell, setEditingIndex, setElements }) => {
   const ref = useRef(null);
 
-  // Drop logic for the row
   const [, drop] = useDrop({
     accept: ItemTypes.ROW,
     hover(item, monitor) {
@@ -24,21 +21,19 @@ const GridRow = ({ row, rowIndex, moveRow, removeRow, gridTemplate, removeGridCe
 
       if (dragIndex === hoverIndex) return;
 
-      const hoverBoundingRect = ref.current.getBoundingClientRect();
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      // Determine whether to move the row
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
-      moveRow(dragIndex, hoverIndex); // Call the moveRow function from props
-      item.index = hoverIndex; // Update the dragged item's index
+      moveRow(dragIndex, hoverIndex);
+      item.index = hoverIndex;
     },
   });
 
-  // Drag logic for the row
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.ROW,
     item: { index: rowIndex },
@@ -47,7 +42,7 @@ const GridRow = ({ row, rowIndex, moveRow, removeRow, gridTemplate, removeGridCe
     }),
   });
 
-  drag(drop(ref)); // Attach both drag and drop functionality
+  drag(drop(ref));
 
   return (
     <div
@@ -69,10 +64,7 @@ const GridRow = ({ row, rowIndex, moveRow, removeRow, gridTemplate, removeGridCe
         ))}
       </div>
       <div className="grid-row-controls">
-        {/* Button for moving row with drag handle props */}
-        <button className="icon-button move-button">
-          <FaArrowsAlt />
-        </button>
+        {/* <FaArrowsAlt className="icon-move-row" /> */}
         <FaTrashAlt className="icon-delete-row" onClick={() => removeRow(rowIndex)} />
       </div>
     </div>

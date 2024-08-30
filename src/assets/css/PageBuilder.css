@@ -72,8 +72,8 @@
 
 .grid-row-controls {
     position: absolute;
-    top: -20px;
-    right: -20px;
+    top: 10px;
+    right: -15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,12 +82,12 @@
 
 .icon-delete-row {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 10px;
     color: red;
-    background-color: #fff;
+    background-color: transparent;
     border-radius: 3px;
     padding: 3px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
 }
 
 .icon-move-row {

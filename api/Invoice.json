@@ -1,0 +1,33 @@
+{
+    "id": 1,
+    "client": {
+      "id": 1,
+      "name": "John Doe",
+      "address": "456 Avenue, City, Country",
+      "postcode": "67890",
+      "primary_email": "johndoe@example.com",
+      "phone": "+0987654321"
+    },
+    "invoice_number": "INV-001",
+    "po_number": "PO-123",
+    "payment_terms": "Net 30",
+    "date": "2024-08-31",
+    "company_settings": {
+      "id": 1,
+      "name": "ABC Corp",
+      "address": "123 Street, City, Country",
+      "postcode": "12345",
+      "company_reg_number": "ABC123456",
+      "vat_number": "VAT987654",
+      "phone_number": "+1234567890",
+      "accounts_email": "accounts@abccorp.com",
+      "name_on_bank_account": "ABC Corp Ltd.",
+      "bank_account": "12345678",
+      "sort_code": "00-11-22",
+      "logo": "/media/logos/company_logo.png"
+    },
+    "total_amount": "1000.00",
+    "vat": "200.00",
+    "grand_total": "1200.00"
+  }
+  

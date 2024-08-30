@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const QrCode = ({ content, onUpdate, onDelete }) => {
+const QrCode = ({ onUpdate, onDelete, style }) => {
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
+
+  useEffect(() => {
+    axios.get('/api/qrcode.json')
+      .then(response => {
+        setQrCodeUrl(response.data.qrcode_url);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the QR code URL!", error);
+      });
+  }, []);
+
   return (
-    <div className="invoice-element">
-      <h4>QR Code</h4>
-      <img src={content} alt="QR Code" style={{ width: '100px', height: '100px' }} />
-      <button onClick={onUpdate}>Edit</button>
-      <button onClick={onDelete}>Delete</button>
+    <div className="invoice-element qr-code" style={style}>
+      <img src={qrCodeUrl} alt="QR Code" />
     </div>
   );
 };

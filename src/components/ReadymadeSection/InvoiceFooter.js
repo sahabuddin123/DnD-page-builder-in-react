@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const InvoiceFooter = ({ content, onUpdate, onDelete }) => {
+const InvoiceFooter = ({ onUpdate, onDelete, style }) => {
+  const [companySettings, setCompanySettings] = useState({});
+
+  useEffect(() => {
+    axios.get('/api/company-settings')
+      .then(response => {
+        setCompanySettings(response.data[0]); // Assuming there is only one company setting
+      })
+      .catch(error => {
+        console.error("There was an error fetching the company settings!", error);
+      });
+  }, []);
+
   return (
-    <div className="invoice-element">
-      <h4>Invoice Footer</h4>
-      <p>{content}</p>
-      <button onClick={onUpdate}>Edit</button>
-      <button onClick={onDelete}>Delete</button>
+    <div className="invoice-element" style={style}>
+      <p style={style}>Thank you for your business!</p>
+      <p style={style}>Contact us at: {companySettings.phone_number}</p>
     </div>
   );
 };

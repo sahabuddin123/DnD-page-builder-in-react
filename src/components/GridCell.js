@@ -9,7 +9,21 @@ import ImageModal from './ImageModal';
 import TableTwoModal from './TableTwoModal';
 import TableRowTwoModal from './TableRowTwoModal';
 import GridCellStyleModal from './GridCellStyleModal';
-import ReadymadeModal from './ReadymadeModal'; // Readymade Modal ইম্পোর্ট
+import ReadymadeModal from './ReadymadeModal';
+
+// Readymade Section Components
+import InvoiceHeader from './ReadymadeSection/InvoiceHeader';
+import InvoiceLogo from './ReadymadeSection/InvoiceLogo';
+import CompanyLogo from './ReadymadeSection/CompanyLogo';
+import CompanyAddress from './ReadymadeSection/CompanyAddress';
+import ClientAddress from './ReadymadeSection/ClientAddress';
+import BankDetails from './ReadymadeSection/BankDetails';
+import InvoiceTitle from './ReadymadeSection/InvoiceTitle';
+import InvoiceTable from './ReadymadeSection/InvoiceTable';
+import InvoiceDetails from './ReadymadeSection/InvoiceDetails';
+import TotalAmountTable from './ReadymadeSection/TotalAmountTable';
+import QrCode from './ReadymadeSection/QrCode';
+import InvoiceFooter from './ReadymadeSection/InvoiceFooter';
 
 const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: globalEditingIndex, setElements: setGlobalElements }) => {
   const [elements, setElements] = useState([]);
@@ -26,8 +40,6 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
   const [currentElement, setCurrentElement] = useState({});
   const [currentRowIndex, setCurrentRowIndex] = useState(null);
   const [rowStyles, setRowStyles] = useState({});
-
-  // Readymade Section-এর জন্য নতুন স্টেট
   const [isReadymadeModalOpen, setIsReadymadeModalOpen] = useState(false);
   const [currentReadymadeElement, setCurrentReadymadeElement] = useState({});
 
@@ -36,10 +48,12 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
   }, [elements, setGlobalElements]);
 
   const [, dropElement] = useDrop({
-    accept: ['text-p', 'text-heading', 'image', 'table', 'one-list', 'table-two',
+    accept: [
+      'text-p', 'text-heading', 'image', 'table', 'one-list', 'table-two',
       'invoice-header', 'invoice-logo', 'company-logo', 'company-address', 'client-address',
       'bank-details', 'invoice-title', 'invoice-table', 'invoice-details',
-      'total-amount-table', 'qr-code', 'invoice-footer'],
+      'total-amount-table', 'qr-code', 'invoice-footer'
+    ],
     drop: (item) => {
       const newElement = { type: item.type, content: '' };
 
@@ -98,19 +112,8 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
       } else {
         // Readymade Section elements
         newElement.content = {
-          type: item.type,
-          textAlign: 'left',
-          fontWeight: '400',
-          fontStyle: 'normal',
-          color: '#000000',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px'
+          companySettings: {}, // Fetch from backend API or mock data
+          invoice: {} // Fetch from backend API or mock data
         };
       }
 
@@ -143,13 +146,13 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
   const handleReadymadeEdit = (index) => {
     const element = elements[index];
     setEditingIndex(index);
-    setCurrentReadymadeElement(element.content); // Update to use the content property
+    setCurrentReadymadeElement(element.content);
     setIsReadymadeModalOpen(true);
   };
 
   const handleReadymadeSave = (updatedElement) => {
     const updatedElements = [...elements];
-    updatedElements[editingIndex].content = { ...updatedElement }; // Properly save the updated content
+    updatedElements[editingIndex].content = { ...updatedElement };
     setElements(updatedElements);
     setIsReadymadeModalOpen(false);
   };
@@ -213,6 +216,27 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
   };
 
   const renderElement = (element, index) => {
+    const commonProps = {
+      style: {
+        textAlign: element.content.textAlign,
+        fontWeight: element.content.fontWeight,
+        fontStyle: element.content.fontStyle,
+        color: element.content.color,
+        fontSize: element.content.fontSize,
+        textTransform: element.content.textTransform,
+        paddingTop: element.content.paddingTop,
+        paddingRight: element.content.paddingRight,
+        paddingBottom: element.content.paddingBottom,
+        paddingLeft: element.content.paddingLeft,
+        marginTop: element.content.marginTop,
+        marginRight: element.content.marginRight,
+        marginBottom: element.content.marginBottom,
+        marginLeft: element.content.marginLeft,
+      },
+      onUpdate: () => handleEdit(index),
+      onDelete: () => handleDelete(index),
+    };
+
     switch (element.type) {
       case 'text-heading':
         return (
@@ -233,7 +257,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
             marginBottom: element.marginBottom || '0px',
             marginLeft: element.marginLeft || '0px'
           }}>
-            {element.content.text || 'Header Text'} {/* Ensure content is accessed properly */}
+            {element.content.text || 'Header Text'}
           </h1>
         );
       case 'text-p':
@@ -255,7 +279,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
             marginBottom: element.marginBottom || '0px',
             marginLeft: element.marginLeft || '0px'
           }}>
-            {element.content.text || 'This is a paragraph.'} {/* Ensure content is accessed properly */}
+            {element.content.text || 'This is a paragraph.'}
           </p>
         );
       case 'table':
@@ -353,39 +377,29 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           </div>
         );
       case 'invoice-header':
+        return <InvoiceHeader {...commonProps} companySettings={element.content.companySettings} invoice={element.content.invoice} />;
       case 'invoice-logo':
+        return <InvoiceLogo {...commonProps} companySettings={element.content.companySettings} />;
       case 'company-logo':
+        return <CompanyLogo {...commonProps} companySettings={element.content.companySettings} />;
       case 'company-address':
+        return <CompanyAddress {...commonProps} companySettings={element.content.companySettings} />;
       case 'client-address':
+        return <ClientAddress {...commonProps} invoice={element.content.invoice} />;
       case 'bank-details':
+        return <BankDetails {...commonProps} companySettings={element.content.companySettings} />;
       case 'invoice-title':
+        return <InvoiceTitle {...commonProps} invoice={element.content.invoice} />;
       case 'invoice-table':
+        return <InvoiceTable {...commonProps} invoice={element.content.invoice} />;
       case 'invoice-details':
+        return <InvoiceDetails {...commonProps} invoice={element.content.invoice} />;
       case 'total-amount-table':
+        return <TotalAmountTable {...commonProps} invoice={element.content.invoice} />;
       case 'qr-code':
+        return <QrCode {...commonProps} invoice={element.content.invoice} />;
       case 'invoice-footer':
-        return (
-          <div
-            // onClick={() => handleReadymadeEdit(index)}
-            style={{
-              cursor: 'default',
-              textAlign: element.content.textAlign,
-              fontWeight: element.content.fontWeight,
-              fontStyle: element.content.fontStyle,
-              color: element.content.color,
-              paddingTop: element.content.paddingTop,
-              paddingRight: element.content.paddingRight,
-              paddingBottom: element.content.paddingBottom,
-              paddingLeft: element.content.paddingLeft,
-              marginTop: element.content.marginTop,
-              marginRight: element.content.marginRight,
-              marginBottom: element.content.marginBottom,
-              marginLeft: element.content.marginLeft,
-            }}
-          >
-            <h4>{element.type.replace('-', ' ').toUpperCase()}</h4>
-          </div>
-        );
+        return <InvoiceFooter {...commonProps} companySettings={element.content.companySettings} />;
 
       default:
         return <div>Default Element</div>;
@@ -409,7 +423,6 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           ))}
           {!elements.length && 'Drop here'}
         </div>
-        {/* Edit Style Button */}
         <button onClick={() => setIsGridCellStyleModalOpen(true)} className="icon-style-edit-button" style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', padding: '3px 10px', fontSize: '12px' }}>
           <MdFormatPaint />
         </button>
@@ -511,7 +524,7 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
           onClose={() => setIsReadymadeModalOpen(false)}
           onSave={handleReadymadeSave}
           elementData={currentReadymadeElement}
-          setElementData={setCurrentReadymadeElement} // Properly use setElementData
+          setElementData={setCurrentReadymadeElement}
         />
       )}
     </div>

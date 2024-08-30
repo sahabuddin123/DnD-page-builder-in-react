@@ -1,0 +1,10 @@
+{
+    "qr_code": {
+      "id": 1,
+      "invoice_id": "INV-001",
+      "qr_image_url": "https://yourdomain.com/media/qrcode/invoice_qr_code.png",
+      "encoded_info": "https://yourdomain.com/pay/invoice/INV-001",
+      "description": "Pay your invoice securely by scanning this QR code."
+    }
+  }
+  

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const CompanyLogo = ({ content, onUpdate, onDelete }) => {
+const CompanyLogo = ({ onUpdate, onDelete, style }) => {
+  const [companySettings, setCompanySettings] = useState({});
+
+  useEffect(() => {
+    axios.get('/api/invoices.json') 
+      .then(response => {
+        setCompanySettings(response.data[0]);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the company settings!", error);
+      });
+  }, []);
+console.log(companySettings);
   return (
-    <div className="invoice-element">
-      <h4>Company Logo</h4>
-      <img src={content} alt="Company Logo" style={{ maxWidth: '150px', maxHeight: '150px' }} />
-      <div>
-        <button onClick={onUpdate}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
-      </div>
+    <div className="invoice-element" style={style}>
+      <img src={companySettings.logo} alt="Company Logo" style={{ maxWidth: '100px' }} />
     </div>
   );
 };

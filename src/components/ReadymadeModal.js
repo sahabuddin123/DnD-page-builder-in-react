@@ -78,9 +78,9 @@ const ReadymadeModal = ({ isOpen, onClose, onSave, elementData, setElementData }
 
           <label>Font Size in px:</label>
           <input
-            type="number"
+            type="text"
             name="fontSize"
-            value={localData.fontSize || 16}
+            value={localData.fontSize || '16px'}
             onChange={handleInputChange}
             placeholder="Font Size"
             className="modal-input"

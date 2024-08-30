@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "name": "ABC Corp",
+  "address": "123 Street, City, Country",
+  "postcode": "12345",
+  "company_reg_number": "ABC123456",
+  "vat_number": "VAT987654",
+  "phone_number": "+1234567890",
+  "accounts_email": "accounts@abccorp.com",
+  "name_on_bank_account": "ABC Corp Ltd.",
+  "bank_account": "12345678",
+  "sort_code": "00-11-22",
+  "logo": "../logo.png"
+}

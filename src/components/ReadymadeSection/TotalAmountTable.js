@@ -1,89 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const TotalAmountTable = ({ content, onUpdate, onDelete }) => {
-  // Parse the content prop to extract subtotal, tax, and total
-  let initialTotals;
-  try {
-    initialTotals = content ? JSON.parse(content) : { subtotal: '0.00', tax: '0.00', total: '0.00' };
-  } catch (error) {
-    console.error('Invalid content format for TotalAmountTable:', error);
-    initialTotals = { subtotal: '0.00', tax: '0.00', total: '0.00' };
-  }
+const TotalAmountTable = ({ onUpdate, onDelete, style }) => {
+  const [totalEvent, setTotalEvent] = useState(0);
+  const [vat, setVat] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+  const [skillCountForPdfRender, setSkillCountForPdfRender] = useState(0);
 
-  const [totals, setTotals] = useState(initialTotals);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleChange = (field, value) => {
-    setTotals({ ...totals, [field]: value });
-  };
-
-  const handleSave = () => {
-    // Ensure all fields are filled
-    if (totals.subtotal && totals.tax && totals.total) {
-      onUpdate(JSON.stringify(totals));
-      setIsEditing(false);
-    } else {
-      alert('Please fill in all fields.');
-    }
-  };
-
-  const handleCancel = () => {
-    setTotals(initialTotals);
-    setIsEditing(false);
-  };
+  useEffect(() => {
+    axios.get('/api/invoice-totals.json')
+      .then(response => {
+        setTotalEvent(response.data.total_event);
+        setVat(response.data.vat);
+        setGrandTotal(response.data.grand_total);
+        setSkillCountForPdfRender(response.data.skill_count_for_pdf_render);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the invoice totals!", error);
+      });
+  }, []);
 
   return (
-    <div className="invoice-element">
-      <h4>Total Amounts</h4>
-      <table border="1" style={{ width: '100%', textAlign: 'left' }}>
-        <tbody>
+    <div className="invoice-element" >
+      <table style={style}>
+        <tfoot>
           <tr>
-            <td>Subtotal</td>
-            <td>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={totals.subtotal}
-                  onChange={(e) => handleChange('subtotal', e.target.value)}
-                />
-              ) : (
-                `$${totals.subtotal}`
-              )}
-            </td>
+            <td colSpan={skillCountForPdfRender} className="text-right">Total:</td>
+            <td>£{totalEvent}</td>
           </tr>
           <tr>
-            <td>Tax</td>
-            <td>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={totals.tax}
-                  onChange={(e) => handleChange('tax', e.target.value)}
-                />
-              ) : (
-                `$${totals.tax}`
-              )}
-            </td>
+            <td colSpan={skillCountForPdfRender} className="text-right">VAT:</td>
+            <td>£{vat}</td>
           </tr>
           <tr>
-            <td><strong>Total</strong></td>
-            <td><strong>${totals.total}</strong></td>
+            <td colSpan={skillCountForPdfRender} className="text-right">Grand Total:</td>
+            <td>£{grandTotal}</td>
           </tr>
-        </tbody>
+        </tfoot>
       </table>
-      <div style={{ marginTop: '8px' }}>
-        {isEditing ? (
-          <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel} style={{ marginLeft: '8px' }}>Cancel</button>
-          </>
-        ) : (
-          <>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={onDelete} style={{ marginLeft: '8px' }}>Delete</button>
-          </>
-        )}
-      </div>
     </div>
   );
 };

@@ -1,0 +1,25 @@
+{
+
+      "id": 1,
+      "text": "Invoice",
+      "font_size": "24px",
+      "font_weight": "bold",
+      "text_align": "center",
+      "font_style": "normal",
+      "text_transform": "uppercase",
+      "font_color": "#333333",
+      "margin": {
+        "top": "20px",
+        "right": "0px",
+        "bottom": "20px",
+        "left": "0px"
+      },
+      "padding": {
+        "top": "10px",
+        "right": "0px",
+        "bottom": "10px",
+        "left": "0px"
+      }
+
+  }
+  

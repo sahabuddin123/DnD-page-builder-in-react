@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const InvoiceDetails = ({ content, onUpdate, onDelete }) => {
+const InvoiceDetails = ({ onUpdate, onDelete, style }) => {
+  const [invoice, setInvoice] = useState({});
+
+  useEffect(() => {
+    axios.get('/api/invoices.json')
+      .then(response => {
+        setInvoice(response.data[0]);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the invoice!", error);
+      });
+  }, []);
+
   return (
-    <div className="invoice-element">
-      <h4>Invoice Details</h4>
-      <p>{content}</p>
-      <button onClick={onUpdate}>Edit</button>
-      <button onClick={onDelete}>Delete</button>
+    <div className="invoice-element" style={style}>
+      <p style={style}>Invoice Nr: {invoice.invoice_number}</p>
+      <p style={style}>PO/Ref Number: {invoice.po_number}</p>
+      <p style={style}>Date: {invoice.date}</p>
+      <p style={style}>Payment Terms: {invoice.payment_terms}</p>
     </div>
   );
 };

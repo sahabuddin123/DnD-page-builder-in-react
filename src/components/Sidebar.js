@@ -6,7 +6,7 @@ import {
 import '../assets/css/Sidebar.css';
 
 // DraggableElement Component
-const DraggableElement = ({ type, icon: Icon, label }) => {
+const DraggableElement = ({ type, icon: Icon, label, title }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type,
     item: { type },
@@ -25,6 +25,7 @@ const DraggableElement = ({ type, icon: Icon, label }) => {
     >
       <Icon style={{ marginRight: '8px' }} />
       {label}
+      {title}
     </div>
   );
 };
@@ -86,29 +87,29 @@ const Sidebar = ({ onAddGrid }) => {
       <CollapsibleSection title="Element">
         <DraggableElement type="image" icon={FaImage} title="Image" />
 
-        <DraggableElement type="one-list" icon={FaList} title="One List" />
+        <DraggableElement type="one-list" icon={FaList} title="List" />
         {/* <DraggableElement type="two-list" icon={FaRegListAlt} title="Two List" /> */}
-        <DraggableElement type="text-p" icon={FaTextHeight} title="Text P" />
-        <DraggableElement type="text-heading" icon={FaHeading} title="Text Heading" />
+        <DraggableElement type="text-p" icon={FaTextHeight} title="Text" />
+        <DraggableElement type="text-heading" icon={FaHeading} title="Heading" />
         {/* <DraggableElement type="button" icon={FaEnvelope} title="Button" /> */}
         <DraggableElement type="table" icon={FaTable} title="Table" />
-        <DraggableElement type="table-two" icon={FaTerminal} title="Editor" />
+        <DraggableElement type="table-two" icon={FaTerminal} title="Table Two" />
       </CollapsibleSection>
 
       {/* Readymade Section */}
       <CollapsibleSection title="Readymade Section">
-        <DraggableElement type="invoice-header" icon={FaFileInvoice} title="Invoice Header" />
-        <DraggableElement type="invoice-logo" icon={FaWarehouse} title="Invoice Logo" />
-        <DraggableElement type="company-logo" icon={FaAddressCard} title="Company Logo" />
-        <DraggableElement type="company-address" icon={FaBuilding} title="Company Address" />
-        <DraggableElement type="client-address" icon={FaUniversity} title="Client Address" />
+        <DraggableElement type="invoice-header" icon={FaFileInvoice} title="Inv Header" />
+        <DraggableElement type="invoice-logo" icon={FaWarehouse} title="Inv Logo" />
+        <DraggableElement type="company-logo" icon={FaAddressCard} title="Com Logo" />
+        <DraggableElement type="company-address" icon={FaBuilding} title="Com Address" />
+        <DraggableElement type="client-address" icon={FaUniversity} title="Cli Address" />
         <DraggableElement type="bank-details" icon={FaAddressBook} title="Bank Details" />
-        <DraggableElement type="invoice-title" icon={FaHeading} title="Invoice Title" />
-        <DraggableElement type="invoice-table" icon={FaTable} title="Invoice Table" />
-        <DraggableElement type="invoice-details" icon={FaSignature} title="Invoice Details" />
-        <DraggableElement type="total-amount-table" icon={FaMoneyBillWave} title="Total Amount Table" />
+        <DraggableElement type="invoice-title" icon={FaHeading} title="Inv Title" />
+        <DraggableElement type="invoice-table" icon={FaTable} title="Inv Table" />
+        <DraggableElement type="invoice-details" icon={FaSignature} title="Inv Details" />
+        <DraggableElement type="total-amount-table" icon={FaMoneyBillWave} title="Total Amount" />
         <DraggableElement type="qr-code" icon={FaBarcode} title="QR Code" />
-        <DraggableElement type="invoice-footer" icon={FaSignature} title="Invoice Footer" />
+        <DraggableElement type="invoice-footer" icon={FaSignature} title="Inv Footer" />
       </CollapsibleSection>
 
     </div>
