@@ -63,9 +63,9 @@ const GridRow = ({ row, rowIndex, moveRow, removeRow, gridTemplate, removeGridCe
           />
         ))}
       </div>
-      <div className="grid-row-controls">
+      <div className="grid-row-controls hide-on-pdf">
         {/* <FaArrowsAlt className="icon-move-row" /> */}
-        <FaTrashAlt className="icon-delete-row" onClick={() => removeRow(rowIndex)} />
+        <FaTrashAlt className="icon-delete-row " onClick={() => removeRow(rowIndex)} />
       </div>
     </div>
   );

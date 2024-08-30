@@ -61,7 +61,7 @@ const CollapsibleSection = ({ title, children }) => {
 };
 
 // Sidebar Component
-const Sidebar = ({ onAddGrid }) => {
+const Sidebar = ({ onAddGrid, handlePrintPreview, handleDownloadPDF, handleDownloadJSON }) => {
   return (
     <div className="sidebar">
       {/* Grid Section */}
@@ -111,7 +111,10 @@ const Sidebar = ({ onAddGrid }) => {
         <DraggableElement type="qr-code" icon={FaBarcode} title="QR Code" />
         <DraggableElement type="invoice-footer" icon={FaSignature} title="Inv Footer" />
       </CollapsibleSection>
-
+{/* New buttons */}
+<button onClick={handlePrintPreview}>Print Preview</button>
+      <button onClick={handleDownloadPDF}>Download as PDF</button>
+      <button onClick={handleDownloadJSON}>Download as JSON</button>
     </div>
   );
 };

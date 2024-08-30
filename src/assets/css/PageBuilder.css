@@ -201,3 +201,27 @@
 .grid-cell{
     min-height: 60px;
 }
+
+/* styles.css */
+/* .hide-on-pdf {
+    display: none !important;
+}
+   */
+  
+  @media print {
+    .dropzone, .grid-cell {
+      border: none !important; /* Hide borders during print */
+    }
+    .grid-row-controls,.icon-style-edit-button, .hide-on-pdf {
+        display: none !important;
+    }
+    .sidebar{
+        display: none !important;
+    }
+    .grid-row{
+        box-shadow: none !important;
+        border: none !important;
+        background-color: transparent;
+    }
+  }
+  

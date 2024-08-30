@@ -408,22 +408,22 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
 
   return (
     <div ref={dropElement} className="grid-cell-wrapper">
-      <div className="grid-cell" style={gridCellStyle}>
+      <div className="grid-cell grid-border" style={gridCellStyle}>
         <div className="grid-cell-content">
           {elements.map((element, index) => (
             <div key={index} className="grid-cell-element">
               <div className="element_section">
                 {renderElement(element, index)}
                 <div className="menu-item">
-                  <button className="icon-delete-row edit_button" onClick={() => handleEdit(index)}><MdEdit /></button>
-                  <button className="icon-delete-row del_button" onClick={() => handleDelete(index)}><MdDelete /></button>
+                  <button className="icon-delete-row edit_button hide-on-pdf" onClick={() => handleEdit(index)}><MdEdit /></button>
+                  <button className="icon-delete-row del_button hide-on-pdf" onClick={() => handleDelete(index)}><MdDelete /></button>
                 </div>
               </div>
             </div>
           ))}
           {!elements.length && 'Drop here'}
         </div>
-        <button onClick={() => setIsGridCellStyleModalOpen(true)} className="icon-style-edit-button" style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', padding: '3px 10px', fontSize: '12px' }}>
+        <button onClick={() => setIsGridCellStyleModalOpen(true)} className="icon-style-edit-button hide-on-pdf" style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', padding: '3px 10px', fontSize: '12px' }}>
           <MdFormatPaint />
         </button>
       </div>
