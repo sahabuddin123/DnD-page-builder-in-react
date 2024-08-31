@@ -212,7 +212,7 @@
     .dropzone, .grid-cell {
       border: none !important; /* Hide borders during print */
     }
-    .grid-row-controls,.icon-style-edit-button, .hide-on-pdf {
+    .grid-row-controls,.icon-style-edit-button, .hide-on-pdf, .hide-for {
         display: none !important;
     }
     .sidebar{
@@ -224,4 +224,3 @@
         background-color: transparent;
     }
   }
-  
