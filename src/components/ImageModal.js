@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/css/Modal.css'; // Add appropriate CSS for styling
+// import '../assets/css/Modal.css'; // Add appropriate CSS for styling
 import '../assets/css/ImageModal.css'; // Add appropriate CSS for styling
 
 const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
@@ -54,7 +54,7 @@ const ImageModal = ({ isOpen, onClose, onSave, imageData, setImageData }) => {
           <button className="close-button" onClick={onClose}>X</button>
         </div>
 
-        <div className="modal-body">
+        <div className="modal-body image-modal">
           {/* Image Preview */}
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <label htmlFor="image-upload-frame" style={{ cursor: 'pointer' }}>

@@ -14,6 +14,7 @@
   .list-modal-body {
     display: flex;
     gap: 20px; /* Gap between the two sections */
+    flex-direction: row !important;
   }
   
   .list-section,
@@ -68,3 +69,4 @@
   .modal-footer{
     justify-content: flex-end;
   }
+ 
