@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import '../assets/css/PageBuilder.css';
 
 const TableTwoModal = ({ isOpen, onClose, onSave, tableData, setTableData }) => {
   const [rows, setRows] = useState(tableData.rows || []);
+
+  // Modal খোলার সময় state সিঙ্ক্রোনাইজ করা হচ্ছে
+  useEffect(() => {
+    setRows(tableData.rows || []);
+  }, [tableData]);
 
   const handleCellChange = (rowIndex, cellIndex, value) => {
     const updatedRows = [...rows];
@@ -12,11 +17,13 @@ const TableTwoModal = ({ isOpen, onClose, onSave, tableData, setTableData }) => 
   };
 
   const addRow = () => {
-    setRows([...rows, { cells: Array(rows[0]?.cells.length || 2).fill(''), styles: {} }]); // Add a new row with empty cells and default styles
+    setRows([...rows, { cells: Array(rows[0]?.cells.length || 2).fill(''), styles: {} }]); // Add a new row with empty cells
   };
 
   const removeRow = () => {
-    setRows(rows.slice(0, -1));
+    if (rows.length > 0) {
+      setRows(rows.slice(0, -1)); // Remove the last row
+    }
   };
 
   const addColumn = () => {
@@ -27,22 +34,27 @@ const TableTwoModal = ({ isOpen, onClose, onSave, tableData, setTableData }) => 
   };
 
   const removeColumn = () => {
-    setRows(rows.map(row => ({
-      ...row,
-      cells: row.cells.slice(0, -1) // Remove the last cell in each row
-    })));
+    if (rows[0]?.cells.length > 1) {
+      setRows(rows.map(row => ({
+        ...row,
+        cells: row.cells.slice(0, -1) // Remove the last cell in each row
+      })));
+    }
   };
 
   const handleSave = () => {
-    setTableData({ rows });
-    onSave({ type: 'table-two', content: { rows } });
+    // Update the table data with the new rows
+    const updatedTableData = { rows };
+    setTableData(updatedTableData); // Update the main state of the component
+    onSave({ content: updatedTableData }); // Call the onSave function with the updated data
+    onClose(); // Close the modal after saving
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content table-modal-content" style={{maxWidth: '60%'}}>
+      <div className="modal-content table-modal-content" style={{ maxWidth: '60%' }}>
         <div className="modal-header">
           <h3>Edit Table Two</h3>
           <div className="table-control-buttons">
@@ -53,7 +65,7 @@ const TableTwoModal = ({ isOpen, onClose, onSave, tableData, setTableData }) => 
           </div>
           <button className="close-button" onClick={onClose}>X</button>
         </div>
-        <div className="modal-body table-modal-body" style={{maxHeight: '400px', overflow: 'scroll'}}>
+        <div className="modal-body table-modal-body" style={{ maxHeight: '400px', overflow: 'scroll' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
             <tbody>
               {rows.map((row, rowIndex) => (

@@ -13,7 +13,7 @@ const CompanyAddress = ({ onUpdate, onDelete, style }) => {
         console.error("There was an error fetching the company settings!", error);
       });
   }, []);
-console.log(companySettings);
+// console.log(companySettings);
   return (
     <div className="invoice-element" style={style}>
       <p style={style}>{companySettings.name}</p>

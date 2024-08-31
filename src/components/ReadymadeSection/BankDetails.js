@@ -13,7 +13,7 @@ const BankDetails = ({ onUpdate, onDelete, style }) => {
         console.error("There was an error fetching the company settings!", error);
       });
   }, []);
-console.log(companySettings);
+// console.log(companySettings);
   return (
     <div className="invoice-element" style={style}>
       <p style={style}>Bank: {companySettings.name_on_bank_account}</p>

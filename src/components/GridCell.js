@@ -169,16 +169,51 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
     setIsTableRowTwoModalOpen(true);
   };
 
-  const handleSave = (updatedElement) => {
-    const updatedElements = [...elements];
-    updatedElements[editingIndex] = { ...currentElement, ...updatedElement };
-    setElements(updatedElements);
-    setIsModalOpen(false);
-    setIsTableModalOpen(false);
-    setIsListModalOpen(false);
-    setIsImageModalOpen(false);
-    setIsTableTwoModalOpen(false);
+  // const handleSave = (updatedElement) => {
+  //   const updatedElements = [...elements];
+  //   updatedElements[editingIndex] = { ...currentElement, ...updatedElement };
+  //   setElements(updatedElements);
+  //   setIsModalOpen(false);
+  //   setIsTableModalOpen(false);
+  //   setIsListModalOpen(false);
+  //   setIsImageModalOpen(false);
+  //   setIsTableTwoModalOpen(false);
+  // };
+
+//   const handleSave = (updatedElement) => {
+//     const updatedElements = [...elements];
+//     updatedElements[editingIndex] = {
+//         ...currentElement,
+//         content: { ...currentElement.content, ...updatedElement }
+//     };
+//     setElements(updatedElements);
+//     setIsModalOpen(false);
+//     setIsTableModalOpen(false);
+//     setIsListModalOpen(false);
+//     setIsImageModalOpen(false);
+//     setIsTableTwoModalOpen(false);
+// };
+
+const handleSave = (updatedElement) => {
+  const updatedElements = [...elements];
+  
+  updatedElements[editingIndex] = {
+      ...currentElement,
+      content: { 
+        ...currentElement.content, 
+        ...updatedElement.content || updatedElement // এখানে 'text-p', 'text-heading' এর জন্যও কাজ করবে
+      },
   };
+  
+  setElements(updatedElements);
+  setIsModalOpen(false);
+  setIsTableModalOpen(false);
+  setIsListModalOpen(false);
+  setIsImageModalOpen(false);
+  setIsTableTwoModalOpen(false);
+};
+
+
 
   const handleRowSave = (updatedRowStyles) => {
     const updatedElements = [...elements];
@@ -201,10 +236,44 @@ const GridCell = ({ id, cellIndex, rowIndex, removeGridCell, setEditingIndex: gl
     setIsImageModalOpen(false);
   };
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  
+  //   if (name === 'content') {
+  //     setCurrentElement((prev) => ({
+  //       ...prev,
+  //       content: {
+  //         ...prev.content,
+  //         text: value,  // assuming 'text' is the key for your content text
+  //       },
+  //     }));
+  //   } else {
+  //     setCurrentElement((prev) => ({
+  //       ...prev,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCurrentElement((prev) => ({ ...prev, [name]: value }));
+  
+    if (name === 'text') { // যদি নাম 'text' হয়
+      setCurrentElement((prev) => ({
+        ...prev,
+        content: {
+          ...prev.content,
+          text: value,  // content.text কে আপডেট করা হচ্ছে
+        },
+      }));
+    } else {
+      setCurrentElement((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
+  
+
 
   const handleAlignmentChange = (alignment) => {
     setCurrentElement((prev) => ({ ...prev, textAlign: alignment }));

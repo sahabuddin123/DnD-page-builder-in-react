@@ -38,20 +38,24 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
       textAlign: element.textAlign,
       color: element.color,
       fontSize: element.fontSize ? `${element.fontSize}px` : '16px',
-      paddingTop: element.paddingTop || '0px',
-      paddingRight: element.paddingRight || '0px',
-      paddingBottom: element.paddingBottom || '0px',
-      paddingLeft: element.paddingLeft || '0px',
-      marginTop: element.marginTop || '0px',
-      marginRight: element.marginRight || '0px',
-      marginBottom: element.marginBottom || '0px',
-      marginLeft: element.marginLeft || '0px',
     };
   };
 
   const handleUpdate = () => {
-    onSave(getTextStyle());
+    const updatedElement = {
+      ...element,
+      content: {
+        ...element.content,
+        text: element.content.text || '', // টেক্সট আপডেট করা হচ্ছে
+      },
+      fontSize: element.fontSize || '16px', // ডিফল্ট ফন্ট সাইজ
+      fontWeight: element.fontWeight || '400', // ডিফল্ট ফন্ট ওজন
+      textAlign: element.textAlign || 'left' // ডিফল্ট টেক্সট অ্যালাইনমেন্ট
+    };
+  
+    onSave(updatedElement);
   };
+  
 
   return (
     <div className="modal-overlay">
@@ -63,7 +67,7 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
 
         <div className="modal-body">
           <label onClick={() => handleLabelClick('content-input')}>Enter Your Content Here:</label>
-          <input
+          {/* <input
             id="content-input"
             type="text"
             name="content"
@@ -71,7 +75,17 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
             onChange={handleInputChange}
             placeholder="Edit content"
             className="modal-input"
-          />
+          /> */}
+
+<input
+  id="content-input"
+  type="text"
+  name="text"
+  value={element.content.text || ''} // এখানে 'text' ব্যবহার হচ্ছে
+  onChange={handleInputChange}
+  placeholder="Edit content"
+  className="modal-input"
+/>
 
           <label>Content Alignment:</label>
           <div className="button-group">
@@ -82,7 +96,7 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
           </div>
 
           <label onClick={() => handleLabelClick('font-size-input')}>Font-size in px:</label>
-          <input
+          {/* <input
             id="font-size-input"
             type="number"
             name="fontSize"
@@ -90,7 +104,17 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
             onChange={handleInputChange}
             placeholder="Font Size"
             className="modal-input"
-          />
+          /> */}
+          <input
+  id="font-size-input"
+  type="text"
+  name="fontSize"
+  value={element.fontSize !== undefined ? element.fontSize : 16}
+  onChange={handleInputChange}
+  placeholder="Font Size"
+  className="modal-input"
+/>
+
 
           <label>Font Weight:</label>
           <div className="button-group font-weight-group">
@@ -118,8 +142,8 @@ const Modal = ({ isOpen, onClose, onSave, element, setElement, handleInputChange
           <label onClick={() => handleLabelClick('font-color-input')}>Font Color:</label>
           <input id="font-color-input" type="color" name="color" value={element.color || '#000000'} onChange={handleInputChange} className="modal-input" />
 
-          {/* Padding and Margin Inputs */}
-          <label>Padding (Top Right Bottom Left):</label>
+                    {/* Add Padding and Margin Inputs */}
+                    <label>Padding (Top Right Bottom Left):</label>
           <div className="padding-margin-inputs">
             <input type="text" name="paddingTop" value={element.paddingTop || '0px'} onChange={handleInputChange} placeholder="Top" />
             <input type="text" name="paddingRight" value={element.paddingRight || '0px'} onChange={handleInputChange} placeholder="Right" />

@@ -13,7 +13,7 @@ const InvoiceLogo = ({ onUpdate, onDelete, style }) => {
         console.error("There was an error fetching the company settings!", error);
       });
   }, []);
-  console.log(companySettings);
+  // console.log(companySettings);
   return (
     <div className="invoice-element" style={style}>
       <img src={companySettings.logo} alt="Invoice Logo" style={{ maxWidth: '100px' }} />

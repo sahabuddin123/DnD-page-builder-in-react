@@ -89,8 +89,8 @@ const Sidebar = ({ onAddGrid, handlePrintPreview, handleDownloadPDF, handleDownl
 
         <DraggableElement type="one-list" icon={FaList} title="List" />
         {/* <DraggableElement type="two-list" icon={FaRegListAlt} title="Two List" /> */}
-        <DraggableElement type="text-p" icon={FaTextHeight} title="Text" />
-        <DraggableElement type="text-heading" icon={FaHeading} title="Heading" />
+        <DraggableElement type="text-p" icon={FaTextHeight} title="Text P" />
+        <DraggableElement type="text-heading" icon={FaHeading} title="Text Heading" />
         {/* <DraggableElement type="button" icon={FaEnvelope} title="Button" /> */}
         <DraggableElement type="table" icon={FaTable} title="Table" />
         <DraggableElement type="table-two" icon={FaTerminal} title="Table Two" />
@@ -111,8 +111,8 @@ const Sidebar = ({ onAddGrid, handlePrintPreview, handleDownloadPDF, handleDownl
         <DraggableElement type="qr-code" icon={FaBarcode} title="QR Code" />
         <DraggableElement type="invoice-footer" icon={FaSignature} title="Inv Footer" />
       </CollapsibleSection>
-{/* New buttons */}
-<button onClick={handlePrintPreview}>Print Preview</button>
+      {/* New buttons */}
+      <button onClick={handlePrintPreview}>Print Preview</button>
       <button onClick={handleDownloadPDF}>Download as PDF</button>
       <button onClick={handleDownloadJSON}>Download as JSON</button>
     </div>
