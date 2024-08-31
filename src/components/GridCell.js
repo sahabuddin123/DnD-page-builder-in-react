@@ -490,7 +490,8 @@ const handleSave = (updatedElement) => {
               </div>
             </div>
           ))}
-          {!elements.length && 'Drop here'}
+          {/* {!elements.length && !window.matchMedia('print').matches && "<div className='hide-on-pdf'>Drop here</div>"} */}
+          {!elements.length && <span className="hide-on-pdf">Drop here</span>}
         </div>
         <button onClick={() => setIsGridCellStyleModalOpen(true)} className="icon-style-edit-button hide-on-pdf" style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer', padding: '3px 10px', fontSize: '12px' }}>
           <MdFormatPaint />

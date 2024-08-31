@@ -223,4 +223,7 @@
         border: none !important;
         background-color: transparent;
     }
+    .hide-on-pdf {
+        display: none !important;
+      }
   }
