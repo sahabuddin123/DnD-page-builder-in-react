@@ -52,6 +52,9 @@
   .sidebar .draggable-element img {
     margin-right: 8px;
   }
+  .draggable-element{
+    font-size: 12px;
+  }
   
   /* .invoice-element {
   background-color: #fff;

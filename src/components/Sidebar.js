@@ -4,6 +4,7 @@ import {
   FaTh, FaSquare, FaTerminal, FaImage, FaColumns, FaAddressBook, FaMicrosoft, FaTable, FaList, FaTextHeight, FaHeading, FaFileInvoice, FaBuilding, FaAddressCard, FaBarcode, FaMoneyBillWave, FaSignature, FaWarehouse, FaRegListAlt, FaEnvelope, FaUniversity
 } from 'react-icons/fa';
 import '../assets/css/Sidebar.css';
+import { BiFontSize } from 'react-icons/bi';
 
 // DraggableElement Component
 const DraggableElement = ({ type, icon: Icon, label, title }) => {
@@ -50,7 +51,7 @@ const CollapsibleSection = ({ title, children }) => {
           background: '#000',
           padding: '10px',
           color: '#fff',
-          margin: '5px 0px'
+          margin: '5px 0px',
         }}>
         {title}
         <span>{isOpen ? '-' : '+'}</span>
@@ -64,6 +65,12 @@ const CollapsibleSection = ({ title, children }) => {
 const Sidebar = ({ onAddGrid, handlePrintPreview, handleDownloadPDF, handleDownloadJSON }) => {
   return (
     <div className="sidebar">
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', gridGap: '5px'}}>
+        <button onClick={handlePrintPreview}>Print</button>
+        <button onClick={handleDownloadPDF}>PDF</button>
+        <button onClick={handleDownloadJSON}>JSON</button>
+      </div>
+
       {/* Grid Section */}
       <CollapsibleSection title="Grid">
         <button className="sidebar-button" onClick={() => onAddGrid('1-grid')}><FaSquare /> 1 Grid</button>
@@ -98,23 +105,21 @@ const Sidebar = ({ onAddGrid, handlePrintPreview, handleDownloadPDF, handleDownl
 
       {/* Readymade Section */}
       <CollapsibleSection title="Readymade Section">
-        <DraggableElement type="invoice-header" icon={FaFileInvoice} title="Inv Header" />
-        <DraggableElement type="invoice-logo" icon={FaWarehouse} title="Inv Logo" />
-        <DraggableElement type="company-logo" icon={FaAddressCard} title="Com Logo" />
-        <DraggableElement type="company-address" icon={FaBuilding} title="Com Address" />
-        <DraggableElement type="client-address" icon={FaUniversity} title="Cli Address" />
+        <DraggableElement type="invoice-header" icon={FaFileInvoice} title="Invoice Header" />
+        <DraggableElement type="invoice-logo" icon={FaWarehouse} title="Invoice Logo" />
+        <DraggableElement type="company-logo" icon={FaAddressCard} title="Company Logo" />
+        <DraggableElement type="company-address" icon={FaBuilding} title="Comany Address" />
+        <DraggableElement type="client-address" icon={FaUniversity} title="Client Address" />
         <DraggableElement type="bank-details" icon={FaAddressBook} title="Bank Details" />
-        <DraggableElement type="invoice-title" icon={FaHeading} title="Inv Title" />
-        <DraggableElement type="invoice-table" icon={FaTable} title="Inv Table" />
-        <DraggableElement type="invoice-details" icon={FaSignature} title="Inv Details" />
+        <DraggableElement type="invoice-title" icon={FaHeading} title="Invoice Title" />
+        <DraggableElement type="invoice-table" icon={FaTable} title="Invoice Table" />
+        <DraggableElement type="invoice-details" icon={FaSignature} title="Invoice Details" />
         <DraggableElement type="total-amount-table" icon={FaMoneyBillWave} title="Total Amount" />
         <DraggableElement type="qr-code" icon={FaBarcode} title="QR Code" />
-        <DraggableElement type="invoice-footer" icon={FaSignature} title="Inv Footer" />
+        <DraggableElement type="invoice-footer" icon={FaSignature} title="Invoice Footer" />
       </CollapsibleSection>
       {/* New buttons */}
-      <button onClick={handlePrintPreview}>Print Preview</button>
-      <button onClick={handleDownloadPDF}>Download as PDF</button>
-      <button onClick={handleDownloadJSON}>Download as JSON</button>
+
     </div>
   );
 };
