@@ -81,6 +81,11 @@ const Builder = () => {
     document.querySelectorAll('.menu-item').forEach(menu => {
       menu.style.display = 'none';
     });
+    document.querySelectorAll('.icon-style-edit-button').forEach(iconStyle => {iconStyle.style.display = 'none';});
+    document.querySelectorAll('.grid-row-controls').forEach(gridRow => {gridRow.style.display = 'none';});
+    document.querySelectorAll('.hide-for').forEach(hideFor => {hideFor.style.display = 'none';});
+    
+
   
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');

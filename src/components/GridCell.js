@@ -368,7 +368,7 @@ const handleSave = (updatedElement) => {
                     {row.cells.map((cell, cellIndex) => (
                       <td key={cellIndex} style={{ border: '1px solid #ddd', padding: '8px' }}>{cell}</td>
                     ))}
-                    <td style={{ position: 'relative', background: 'transparent' }}>
+                    <td style={{ position: 'relative', background: 'transparent' }} className='hide-for'>
                       <span style={{ position: 'absolute', right: '0' }}>
                         <button onClick={() => handleRowEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0' }}><MdEdit /></button>
                       </span>
@@ -389,8 +389,8 @@ const handleSave = (updatedElement) => {
                     {row.cells.map((cell, cellIndex) => (
                       <td key={cellIndex} style={{ border: '1px solid #ddd', padding: '8px' }}>{cell}</td>
                     ))}
-                    <td style={{ position: 'relative', background: 'transparent' }}>
-                      <span style={{ position: 'absolute', right: '0' }}>
+                    <td style={{ position: 'relative', background: 'transparent' }} className='hide-for'>
+                      <span style={{ position: 'absolute', right: '0' }} >
                         <button onClick={() => handleRowTwoEdit(rowIndex)} style={{ color: 'blue', background: 'transparent', margin: '0', padding: '0' }}><MdEdit /></button>
                       </span>
                     </td>
